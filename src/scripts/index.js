@@ -3,7 +3,7 @@ async function search(username) {
     return await response.json()
 }
 
-document.getElementById('btn-search').addEventListener('click', () =>{
+document.getElementById('btn-search').addEventListener('click', () => {
     const username = document.getElementById('input-search').value
     getUserProfile(username)
 })
@@ -11,10 +11,6 @@ document.getElementById('btn-search').addEventListener('click', () =>{
 function getUserProfile(username) {
     search(username).then(
         userData => {
-            console.log(`Nome: ${userData.name}`);
-            console.log(`Bio: ${userData.bio}`);
-            console.log(userData.avatar_url);
-
             let userInfo =
                 `
                 <img src="${userData.avatar_url}" alt="Foto de perfil do usuário ${userData.name}">
@@ -25,7 +21,6 @@ function getUserProfile(username) {
                 `
 
             document.querySelector('.profile-data').innerHTML = userInfo
-
         }
     )
 }
