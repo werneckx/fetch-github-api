@@ -15,7 +15,7 @@ const screen = {
         let repositoriesItens = ''
         user.repositories.forEach(repo => {
             repositoriesItens +=
-                `<li><a=href="${repo.html_url}" target="_blank">${repo.name}</a></li>`
+                `<li><a href="${repo.html_url}" target="_blank">${repo.name}</a></li>`
         });
 
         this.userProfile.innerHTML +=
