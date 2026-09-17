@@ -27,6 +27,9 @@ const screen = {
             `
 
         console.log(repositoriesItens)
+    },
+    renderNotFound(){
+        this.userProfile.innerHTML = `<h1>Usuário Não Encontrado</h1>`
     }
 }
 
