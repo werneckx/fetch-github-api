@@ -1,11 +1,15 @@
 
-import { user } from "./services/user.js"
-import { repositories } from "./services/repositories.js"
+// SERVICES
+import { getUser } from "./services/user.js"
+import { getRepositories } from "./services/repositories.js"
+
+// OBJECTS
+import { user } from "./objects/user.js"
+import { screen } from "./objects/screen.js"
 
 document.getElementById('btn-search').addEventListener('click', () => {
     const userName = document.getElementById('input-search').value
     getUserProfile(userName)
-    getUserRepositories(userName)
 })
 
 document.getElementById('input-search').addEventListener('keyup', (e) => {
@@ -15,46 +19,17 @@ document.getElementById('input-search').addEventListener('keyup', (e) => {
 
     if (isEnterKeyPressed) {
         getUserProfile(userName);;
-        getUserRepositories(userName)
     }
 })
 
-function getUserProfile(userName) {
-    user(userName).then(
-        userData => {
-            let userInfo =
-                `
-                <div class="info">
-                    <img src="${userData.avatar_url}" alt="Foto de perfil do usuário ${userData.name}">
-                    <div class="data">
-                        <h1>${userData.name ?? 'N/A'}</h1>
-                        <p>${userData.bio ?? 'N/A'}</p>
-                    </div>
-                </div>
-                `
+async function getUserProfile(userName) {
 
-            document.querySelector('.profile-data').innerHTML = userInfo
-        }
-    )
-}
-
-function getUserRepositories(userName) {
-    repositories(userName).then(
-        reposData => {
-            let repositoriesItens = ""
-
-            reposData.forEach(repo => {
-                repositoriesItens +=
-                    `<li><a = href="${repo.html_url}" target="_blank">${repo.name}</a></li>`
-            });
-
-            document.querySelector('.profile-data').innerHTML +=
-                `
-                <div class="repositories section">
-                    <h2>Repositórios</h2>
-                    <ul>${repositoriesItens}</ul>
-                </div>
-                `
-        }
-    )
+    const userResponse = await getUser(userName)
+    const repositoriesResponse = await getRepositories(userName)
+    user.setInfo(userResponse)
+    user.setRepositories(repositoriesResponse)
+    screen.renderUser(user)
+    
+    console.log(user)
+    console.log(repositoriesResponse)
 }
