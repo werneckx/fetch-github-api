@@ -7,8 +7,16 @@ import { getRepositories } from "./services/repositories.js"
 import { user } from "./objects/user.js"
 import { screen } from "./objects/screen.js"
 
+function validateEmptyInput(userName){
+    if(userName.length === 0){
+        alert('Preencha o campo com o nome do usuário do GitHub')
+        return true
+    }
+}
+
 document.getElementById('btn-search').addEventListener('click', () => {
     const userName = document.getElementById('input-search').value
+    if(validateEmptyInput(userName)) return
     getUserProfile(userName)
 })
 
@@ -16,7 +24,7 @@ document.getElementById('input-search').addEventListener('keyup', (e) => {
     const userName = e.target.value
     const key = e.which || e.keyCode
     const isEnterKeyPressed = key === 13
-
+    if(validateEmptyInput(userName)) return
     if (isEnterKeyPressed) {
         getUserProfile(userName);;
     }
